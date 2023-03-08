@@ -2,6 +2,8 @@ import { getRandomInteger, createIdGenerator } from './util.js';
 
 // Переменные.
 const PHOTO_COUNT = 25;
+const COMMENT_NUMBER_MIN = 1;
+const COMMENT_NUMBER_MAX = 5;
 
 const DESCRIPTIONS = [
   'Горы',
@@ -46,9 +48,14 @@ const createComment = () => {
   };
 };
 
+//Получаем случайное число комментариев
+const getRandomNumberComments = () =>
+  Array.from({length: getRandomInteger(COMMENT_NUMBER_MIN, COMMENT_NUMBER_MAX)}, createComment);
+
+
 // Создаем описание для фото.
 const createCardDescription = () => {
-  const randomComment = createComment();
+  const randomComment = getRandomNumberComments();
   const randomPhotoId = generatePhotoId();
   const randomDescriptionId = getRandomInteger(0, DESCRIPTIONS.length - 1);
   const randomLikesNumber = getRandomInteger(15, 200);
@@ -62,8 +69,8 @@ const createCardDescription = () => {
   };
 };
 
-// Генерируем случайный элемент массива
-const createDescriptionsForAll = Array.from({ length: PHOTO_COUNT }, createCardDescription);
+// Генерируем массив с фото и комментариями
+const createDescriptionsForAll = () => Array.from({ length: PHOTO_COUNT }, createCardDescription);
 
 export {createDescriptionsForAll};
 

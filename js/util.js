@@ -6,7 +6,7 @@ const getRandomInteger = (a, b) => {
   return Math.floor(result);
 };
 
-//Генерируем уникальные идентификаторов.
+//Генерируем уникальные идентификаторы.
 function createIdGenerator() {
   let lastGeneratedId = 0;
 
