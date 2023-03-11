@@ -37,14 +37,14 @@ const generateCommentId = createIdGenerator();
 const createComment = () => {
   const randomIdComment = generateCommentId();
   const randomIdAvatar = getRandomInteger(1, 6);
-  const randomIdMassage = getRandomInteger(0, MESSAGES.length - 1);
-  const randomIdNames = getRandomInteger(0, NAMES.length - 1);
+  const randomIdMessage = getRandomInteger(0, MESSAGES.length - 1);
+  const randomIdName = getRandomInteger(0, NAMES.length - 1);
 
   return {
     id: randomIdComment,
     avatar: `img/avatar-${randomIdAvatar}.svg`,
-    message: MESSAGES[randomIdMassage],
-    name: NAMES[randomIdNames],
+    message: MESSAGES[randomIdMessage],
+    name: NAMES[randomIdName],
   };
 };
 
@@ -70,8 +70,8 @@ const createCardDescription = () => {
 };
 
 // Генерируем массив с фото и комментариями
-const createDescriptionsForAll = () => Array.from({ length: PHOTO_COUNT }, createCardDescription);
+const generatePhotoGallery = () => Array.from({ length: PHOTO_COUNT }, createCardDescription);
 
-export {createDescriptionsForAll};
+export {generatePhotoGallery};
 
 
