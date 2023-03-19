@@ -1,5 +1,6 @@
 import { generatePhotoGallery } from './data.js';
 
+
 const picturesContainer = document.querySelector('.pictures');
 
 const picturesTitle = picturesContainer.querySelector('.pictures__title');
