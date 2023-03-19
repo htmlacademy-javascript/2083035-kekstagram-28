@@ -1,4 +1,4 @@
-import {isEscapeKey} from './util.js';
+import { hideModal, showModal } from './modal.js';
 
 const bigPicture = document.querySelector('.big-picture');
 const bigPictureImg = bigPicture.querySelector('.big-picture__img').querySelector('img');
@@ -10,7 +10,7 @@ const socialComment = socialCommentList.querySelector('.social__comment');
 const socialCommentsCount = bigPicture.querySelector('.social__comment-count');
 const socialCaption = bigPicture.querySelector('.social__caption');
 const commentsLoader = bigPicture.querySelector('.comments-loader');
-const body = document.querySelector('body');
+
 
 // Генерация комментариев на большом фото
 
@@ -26,10 +26,13 @@ const renderSocialComment = (comments) => {
   socialCommentList.append(commentsFragment);
 };
 
+// Закрываем большое фото по клику на крестик
+
+bigPictureCloseButton.addEventListener('click', hideModal);
+
 // Генерируем большое фото
 const renderFullSizePicture = (picture) => {
-  bigPicture.classList.remove('hidden');
-  body.classList.add('modal-open');
+  showModal();
 
   socialCommentList.innerHTML = '';
   socialCommentsCount.classList.add('hidden');
@@ -44,20 +47,5 @@ const renderFullSizePicture = (picture) => {
 
 };
 
-// Закрываем большое фото по клику на крестик
-bigPictureCloseButton.addEventListener('click', () => {
-  bigPicture.classList.add('hidden');
-  body.classList.remove('modal-open');
-});
-
-// Закрываем большое фото по клавише ESC
-document.addEventListener('keydown', (evt) => {
-  if (isEscapeKey(evt)) {
-    evt.preventDefault();
-    bigPicture.classList.add('hidden');
-    body.classList.remove('modal-open');
-  }
-});
-
-
 export { renderFullSizePicture };
+
