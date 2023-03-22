@@ -3,7 +3,7 @@ import { getRandomInteger, createIdGenerator } from './util.js';
 // Переменные.
 const PHOTO_COUNT = 25;
 const COMMENT_NUMBER_MIN = 1;
-const COMMENT_NUMBER_MAX = 5;
+const COMMENT_NUMBER_MAX = 15;
 
 const DESCRIPTIONS = [
   'Горы',

@@ -16,5 +16,7 @@ function createIdGenerator() {
   };
 }
 
+// Проверка нажатой клавиши
+const isEscapeKey = (evt) => evt.key === 'Escape';
 
-export {getRandomInteger, createIdGenerator};
+export {getRandomInteger, createIdGenerator, isEscapeKey};
