@@ -1,5 +1,7 @@
 import { isEscapeKey } from './util.js';
 import {validate} from './validation.js';
+import {resetScale} from './img-scale.js';
+import {resetEffects} from './img-effects.js';
 
 const uploadFileControl = document.querySelector('#upload-file');
 const uploadOverlay = document.querySelector('.img-upload__overlay');
@@ -18,6 +20,8 @@ const hideModalPressEsc = (evt) => {
 
 // Закрытие окна загрузки фото по клику на крестик
 const hideModal = () => {
+  resetScale();
+  resetEffects();
   uploadOverlay.classList.add('hidden');
   body.classList.remove('modal-open');
 
