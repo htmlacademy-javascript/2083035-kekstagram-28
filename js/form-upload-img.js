@@ -1,7 +1,7 @@
 import { isEscapeKey } from './util.js';
-import {validate} from './validation.js';
-import {resetScale} from './img-scale.js';
-import {resetEffects} from './img-effects.js';
+import { validate } from './validation.js';
+import { resetScale } from './img-scale.js';
+import { resetEffects } from './img-effects.js';
 
 const uploadFileControl = document.querySelector('#upload-file');
 const uploadOverlay = document.querySelector('.img-upload__overlay');
@@ -59,12 +59,13 @@ function onFileUpload(evt) {
 
 const openUploadImgForm = (evt) => {
 
-  evt.preventDefault();
-  if (validate()){
+  // evt.preventDefault();
+  if (validate()) {
     uploadForm.submit();
   }
 
 };
 
-uploadForm.addEventListener('submit',openUploadImgForm);
+uploadForm.addEventListener('submit', openUploadImgForm);
 
+export { openUploadImgForm };
