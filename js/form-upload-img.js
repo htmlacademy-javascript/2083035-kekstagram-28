@@ -3,6 +3,7 @@ import { validate } from './validation.js';
 import { resetScale } from './img-scale.js';
 import { resetEffects } from './img-effects.js';
 
+
 const uploadFileControl = document.querySelector('#upload-file');
 const uploadOverlay = document.querySelector('.img-upload__overlay');
 const imgUploadCancel = document.querySelector('.img-upload__cancel');
@@ -58,8 +59,7 @@ function onFileUpload(evt) {
 }
 
 const openUploadImgForm = (evt) => {
-
-  // evt.preventDefault();
+  evt.preventDefault();
   if (validate()) {
     uploadForm.submit();
   }
