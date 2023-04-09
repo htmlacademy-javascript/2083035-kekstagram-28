@@ -42,7 +42,7 @@ const closeSuccessPopupMessage = () => {
 
 const onOutSideSuccessClick = (evt) => {
   const successPopup = document.querySelector('.success__inner');
-  if (evt.target !== successPopup) {
+  if (evt.target !== successPopup && evt.target.closest(successPopup)) {
     closeSuccessPopupMessage();
   }
 };
