@@ -1,13 +1,16 @@
 import { isEscapeKey } from './util.js';
-import {validate} from './validation.js';
-import {resetScale} from './img-scale.js';
-import {resetEffects} from './img-effects.js';
+import { validate } from './validation.js';
+import { resetScale } from './img-scale.js';
+import { resetEffects } from './img-effects.js';
+import { showSuccessSendDataMessage, showErrorSendDataMessage } from './user-message.js';
+import { sendData } from './api.js';
 
 const uploadFileControl = document.querySelector('#upload-file');
 const uploadOverlay = document.querySelector('.img-upload__overlay');
 const imgUploadCancel = document.querySelector('.img-upload__cancel');
 const body = document.querySelector('body');
 const uploadForm = document.querySelector('#upload-select-image');
+
 
 // Закрытие окна загрузки фото по клавише ESC
 const hideModalPressEsc = (evt) => {
@@ -45,26 +48,37 @@ function onFileUpload(evt) {
   const input = evt.target;
   const file = input.files[0];
   const reader = new FileReader();
-
-  reader.readAsText(file);
-
+  const imgContainer = document.querySelector('.img-upload__preview');
+  const img = imgContainer.querySelector('img');
+  reader.readAsDataURL(file);
   reader.onload = function () {
+    img.src = reader.result;
+
     showModal();
   };
-
   reader.onerror = function () {
+
   };
 
 }
 
-const openUploadImgForm = (evt) => {
-
-  evt.preventDefault();
-  if (validate()){
-    uploadForm.submit();
+const postForm = (async (data) => {
+  try {
+    await sendData(data);
+    hideModal();
+    showSuccessSendDataMessage();
+  } catch {
+    showErrorSendDataMessage();
   }
+});
 
+const openUploadImgForm = (evt) => {
+  evt.preventDefault();
+  if (validate()) {
+    const formData = new FormData(evt.target);
+    postForm(formData);
+  }
 };
 
-uploadForm.addEventListener('submit',openUploadImgForm);
+uploadForm.addEventListener('submit', openUploadImgForm);
 

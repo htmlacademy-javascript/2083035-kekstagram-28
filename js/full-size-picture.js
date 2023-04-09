@@ -35,8 +35,8 @@ const renderFullSizePicture = (picture) => {
   showModal();
 
   socialCommentList.innerHTML = '';
-  socialCommentsCount.classList.add('hidden');
-  commentsLoader.classList.add('hidden');
+  socialCommentsCount.classList.remove('hidden');
+  commentsLoader.classList.remove('hidden');
 
   bigPictureImg.src = picture.url;
   likesCount.textContent = picture.likes;
@@ -44,6 +44,7 @@ const renderFullSizePicture = (picture) => {
   commentsCount.textContent = picture.comments.length;
 
   renderSocialComment(picture.comments);
+
 
 };
 
