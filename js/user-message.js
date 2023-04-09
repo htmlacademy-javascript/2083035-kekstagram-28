@@ -3,19 +3,6 @@ import { isEscapeKey } from './util.js';
 const userMessageError = document.querySelector('#error').content.querySelector('.error');
 const userMessageSuccess = document.querySelector('#success').content.querySelector('.success');
 
-//Ошибка получения данных
-const showErrorGetDataMessage = (error) => {
-  const messageTemp = userMessageError.cloneNode(true);
-  messageTemp.querySelector('.error__title').textContent = error;
-  document.addEventListener('keydown', onDocumentKeydownError);
-  messageTemp.querySelector('.error__button').classList.add('hidden');
-  document.body.append(messageTemp);
-  setTimeout(() => {
-    messageTemp.remove();
-  }, 2000);
-};
-
-
 //Ошибка отправки данных
 const closeErrorPopupMessage = () => {
   document.removeEventListener('keydown', onDocumentKeydownError);
@@ -76,4 +63,4 @@ function onDocumentKeydownSuccess(evt) {
   }
 }
 
-export { showErrorGetDataMessage, showSuccessSendDataMessage, showErrorSendDataMessage };
+export { showSuccessSendDataMessage, showErrorSendDataMessage };

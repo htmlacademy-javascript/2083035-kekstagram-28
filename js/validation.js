@@ -5,7 +5,7 @@ const HASHTAG_MAX_LENGTH = 19;
 const HASHTAG_REGEX = /^#[a-zа-яё0-9]{1,19}$/i;
 const HASHTAG_MAX_QUANTITY = 5;
 const MESSAGES = {
-  hasHash: `Правило: первый символ # далее буквы и числа но не более ${HASHTAG_MAX_LENGTH} шт.`,
+  hasHash: `Первый символ # далее буквы и числа, но не более ${HASHTAG_MAX_LENGTH} шт.`,
   maxQuantity: `Максимально может быть ${HASHTAG_MAX_QUANTITY} хэштегов`,
   noRepetitions: 'Хэштеги не могут повторяться',
   maxLengthComment: `Максимальная длина комментария ${COMMENT_MAX_LENGTH} символов`
