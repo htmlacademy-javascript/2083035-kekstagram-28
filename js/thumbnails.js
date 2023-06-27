@@ -1,6 +1,6 @@
 import { generatePhotoGallery } from './data.js';
-import {renderFullSizePicture} from './full-size-picture.js';
-
+import { renderFullSizePicture } from './full-size-picture.js';
+import { showFilter } from './sort.js';
 
 const picturesContainer = document.querySelector('.pictures');
 
@@ -21,10 +21,13 @@ picturesGallery.forEach(({ url, likes, comments }, index) => {
   pictureElement.setAttribute('id', `photo${index + 1}`);
 
   pictureElement.addEventListener('click', () => {
-    renderFullSizePicture({url, likes, comments});
+    renderFullSizePicture({ url, likes, comments });
   });
 
   pictureGalleryFragment.append(pictureElement);
+
+  showFilter();
+
 });
 
 picturesContainer.append(pictureGalleryFragment);
