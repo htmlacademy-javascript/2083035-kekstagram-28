@@ -29,13 +29,34 @@ const showCommentsCount = () => {
   commentsLoader.classList.remove('hidden');
 };
 
-const getComments = () => {
+const getComments = (oldCounter, newCounter) => {
   commentsCountTotal.textContent = defaultCommentsArrayLength;
   const initCommentsArray = [...defaultCommentsArray];
-  const shortArray = initCommentsArray.splice(0, counter);
+  const shortArray = initCommentsArray.slice(oldCounter, newCounter);
+  return shortArray;
+};
+
+const hideLoadMoreButton = () => {
+  if (defaultCommentsArrayLength <= counter) {
+    counter = defaultCommentsArrayLength;
+    commentsLoader.classList.add('hidden');
+  }
+};
+
+const loadMoreComments = () => {
+
+  const oldCounter = counter;
+  if (defaultCommentsArrayLength > counter) {
+    counter += 5;
+  }
+
+  hideLoadMoreButton();
+
+  const shortArray = getComments(oldCounter, counter);
+  commentsCount.textContent = counter;
 
   renderSocialComment(shortArray);
-  return shortArray;
+
 };
 
 const initComments = (comments) => {
@@ -44,13 +65,12 @@ const initComments = (comments) => {
   defaultCommentsArray = comments;
   defaultCommentsArrayLength = comments.length;
 
-  if (defaultCommentsArrayLength <= counter) {
-    counter = defaultCommentsArrayLength;
-    commentsLoader.classList.add('hidden');
-  }
+  hideLoadMoreButton();
 
-  getComments();
+  const newArray = getComments(0, counter);
   commentsCount.textContent = counter;
+
+  renderSocialComment(newArray);
 
 };
 
@@ -60,18 +80,8 @@ const destroyComments = () => {
   counter = 5;
 };
 
-const loadMoreComments = () => {
-  if (defaultCommentsArrayLength > counter) {
-    counter += 5;
-  }
-
-  const bigCommentsArray = defaultCommentsArray.splice(0, counter);
-
-  initComments(bigCommentsArray);
-
-};
-
 commentsLoader.addEventListener('click', loadMoreComments);
+
 
 export { getComments, initComments, destroyComments };
 

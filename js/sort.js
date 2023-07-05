@@ -9,21 +9,22 @@ const allFilterButtonsElement = document.querySelectorAll('.img-filters__button'
 const showFilter = () => filterSectionElement.classList.remove('img-filters--inactive');
 
 // Показываем случаные фото
-const filterRandom = (items) => items.sort(() => Math.random() - Math.random()).slice(0, RANDOM_PHOTOS_AMOUNT);
+const filterRandom = (array) => array.sort(() => Math.random() - 0.5).slice(0, RANDOM_PHOTOS_AMOUNT);
 
 // Показываем наиболее обсуждаемые фото
-const sortByMostDiscussed = (items) => items.sort((photoFirst, photoSecond) => photoSecond.comments.length - photoFirst.comments.length);
+const sortByMostDiscussed = (array) => array.sort((photoFirst, photoSecond) => photoSecond.comments.length - photoFirst.comments.length);
+
 
 // Отрисовывем миниатюры, соглано фильтру
-const changeFilter = (renderGallery) => {
+const changeFilter = (picturesGallery) => {
   allFilterButtonsElement.forEach((filterButton) => {
     filterButton.addEventListener('click', (evt) => {
       filterSectionElement.querySelector(`.${ACTIVE_FILTER}`).classList.remove(ACTIVE_FILTER);
       evt.target.classList.add(ACTIVE_FILTER);
-      renderGallery();
+      picturesGallery();
     });
   });
 };
+changeFilter();
 
-
-export { filterRandom, sortByMostDiscussed, showFilter, changeFilter };
+export { showFilter }

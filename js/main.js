@@ -2,6 +2,7 @@ import './thumbnails.js';
 import { getData } from './api.js';
 import './form-upload-img.js';
 import { generatePhotoGallery } from './data.js';
+import './sort.js';
 import { showAlert } from './util.js';
 
 
