@@ -1,16 +1,6 @@
-import './thumbnails.js';
-import { getData } from './api.js';
 import './form-upload-img.js';
-import { generatePhotoGallery } from './data.js';
 import './sort.js';
-import { showAlert } from './util.js';
+import { picturesData,renderFilteredPictures } from './sort.js';
 
-
-try {
-  const data = await getData();
-  generatePhotoGallery(data);
-} catch (err) {
-  showAlert(err.message);
-}
-
+renderFilteredPictures(picturesData);
 

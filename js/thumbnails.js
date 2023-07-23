@@ -1,35 +1,45 @@
-import { generatePhotoGallery } from './data.js';
 import { renderFullSizePicture } from './full-size-picture.js';
 import { showFilter } from './sort.js';
 
-const picturesContainer = document.querySelector('.pictures');
-
-const picturesTitle = picturesContainer.querySelector('.pictures__title');
-picturesTitle.classList.remove('visually-hidden');
-
-const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
-const picturesGallery = generatePhotoGallery();
-const pictureGalleryFragment = document.createDocumentFragment();
+const thumbnailBlock = document.querySelector('.pictures');
+const thumbnailTitle = thumbnailBlock.querySelector('.pictures__title');
+thumbnailTitle.classList.remove('visually-hidden');
 
 
-picturesGallery.forEach(({ url, likes, comments }, index) => {
-  const pictureElement = pictureTemplate.cloneNode(true);
+const thumbnailTemplate = document.querySelector('#picture')
+  .content
+  .querySelector('.picture');
 
-  pictureElement.querySelector('.picture__img').src = url;
-  pictureElement.querySelector('.picture__likes').textContent = likes;
-  pictureElement.querySelector('.picture__comments').textContent = comments.length;
-  pictureElement.setAttribute('id', `photo${index + 1}`);
+const thumbnailFragment = document.createDocumentFragment();
 
-  pictureElement.addEventListener('click', () => {
+const createThumbnail = ({ url, likes, description, comments, id }) => {
+  const thumbnailElement = thumbnailTemplate.cloneNode(true);
+
+  thumbnailElement.querySelector('.picture__img').alt = description;
+  thumbnailElement.querySelector('.picture__img').src = url;
+  thumbnailElement.querySelector('.picture__likes').textContent = likes;
+  thumbnailElement.querySelector('.picture__comments').textContent = comments.length;
+  thumbnailElement.dataset.thumbnailId = id;
+
+  thumbnailElement.addEventListener('click', () => {
     renderFullSizePicture({ url, likes, comments });
   });
 
-  pictureGalleryFragment.append(pictureElement);
+  return thumbnailElement;
+};
+
+const renderThumbnails = (pictures) => {
+  thumbnailBlock.querySelectorAll('.picture').forEach((item) => item.remove());
+
+  pictures.forEach((picture) => {
+    const thumbnailElement = createThumbnail(picture);
+    thumbnailFragment.appendChild(thumbnailElement);
+  });
+
+  thumbnailBlock.appendChild(thumbnailFragment);
 
   showFilter();
+};
 
-});
-
-picturesContainer.append(pictureGalleryFragment);
-
+export { renderThumbnails };
 
