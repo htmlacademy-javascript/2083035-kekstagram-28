@@ -1,9 +1,10 @@
 import { getData } from './api.js';
-import { showAlert, getRandomInteger } from './util.js';
+import { showAlert, debounce } from './util.js';
 import { renderThumbnails } from './thumbnails.js';
 
-const RANDOM_PHOTOS_AMOUNT = 10;
-const ACTIVE_FILTER = 'img-filters__button--active';
+const RANDOM_PHOTOS_AMOUNT = 25;
+const RERENDER_DELAY = 500;
+
 const filterSectionElement = document.querySelector('.img-filters');
 const allFilterButtonsElement = document.querySelectorAll('.img-filters__button');
 
@@ -13,38 +14,48 @@ const getDefaultPictures = () => picturesData;
 // Показываем фильтры
 const showFilter = () => filterSectionElement.classList.remove('img-filters--inactive');
 
+// Показываем случаные фото
 const getRandomPictures = (data) => {
-  const randomPictures = [];
-  const randomIndexes = [];
-
-  while (randomPictures.length < RANDOM_PHOTOS_AMOUNT) {
-    const currentIndex = getRandomInteger(0, data.length - 1);
-    if (randomIndexes.includes(currentIndex)) {
-      continue;
-    }
-    randomPictures.push(data[currentIndex]);
-    randomIndexes.push(currentIndex);
-  }
-  return randomPictures;
+  const sortedPictures = data.sort(() => Math.random() - 0.5).slice(0, RANDOM_PHOTOS_AMOUNT);
+  return sortedPictures;
 };
 
+// Показываем наиболее обсуждаемые фото
 const getSortedByCommentsPictures = (data) => {
   const sortedComments = data.slice().sort((a, b) => b.comments.length - a.comments.length);
   return sortedComments;
 };
 
+const activateButton = (button) => {
+  button.classList.add('img-filters__button--active');
+};
 
-// Отрисовывем миниатюры, соглано фильтру
+const inactivateButtons = () => {
+  allFilterButtonsElement.forEach((button) => {
+    button.classList.remove('img-filters__button--active');
+  });
+};
+
 const renderFilteredPictures = () => {
-
-  if (ACTIVE_FILTER === 'filter-random') {
+  if (filterSectionElement.querySelector('#filter-random')) {
     renderThumbnails(getRandomPictures(picturesData));
-  } else if (ACTIVE_FILTER === 'filter-discussed') {
+  } else if (filterSectionElement.querySelector('#filter-discussed')) {
     renderThumbnails(getSortedByCommentsPictures(picturesData));
   } else {
     renderThumbnails(getDefaultPictures());
   }
 };
 
+const debouncePicturesRendering = debounce(renderFilteredPictures, RERENDER_DELAY);
 
-export { showFilter, renderFilteredPictures, picturesData }
+const setSortButtonsEventListeners = () => {
+  filterSectionElement.addEventListener('click', (evt) => {
+    if (evt.target.classList.contains('img-filters__button') && !evt.target.classList.contains('img-filters__button--active')) {
+      inactivateButtons();
+      activateButton(evt.target);
+      debouncePicturesRendering();
+    }
+  });
+};
+
+export { showFilter, renderFilteredPictures, picturesData, setSortButtonsEventListeners };
