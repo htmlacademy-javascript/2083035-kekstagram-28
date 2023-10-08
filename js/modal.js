@@ -1,4 +1,5 @@
 import { isEscapeKey } from './util.js';
+import { destroyComments} from './render-comments.js';
 
 const body = document.querySelector('body');
 const bigPicture = document.querySelector('.big-picture');
@@ -14,7 +15,7 @@ const hideModalPressEsc = (evt) => {
 const hideModal = () => {
   bigPicture.classList.add('hidden');
   body.classList.remove('modal-open');
-
+  destroyComments();
   document.removeEventListener('keydown', hideModalPressEsc);
 };
 
